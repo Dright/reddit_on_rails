@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(params[:comment])
+    @comment = current_user.comments.new(params[:comment])
     
     respond_to do |format|
       if @comment.save
@@ -18,9 +18,4 @@ class CommentsController < ApplicationController
     end
   end
 
-  def update
-  end
-
-  def delete
-  end
 end

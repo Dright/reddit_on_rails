@@ -8,6 +8,7 @@
   <tr>
     <th>Link</th>
     <th>Share by</th>
+    <th>Vote</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,6 +18,11 @@
   <tr>
     <td><%= link_to link.title, link.url %></td>
     <td><%= link.user.name if link.user.present? %></td>
+    <td><%= link.votes.where(:up => true).count - link.votes.where(:up => false).count %></td>
+    <td>
+        <%= link_to '+', link_votes_path(link, :vote => {:link_id => link.id, :up => true}), :method => :post %>
+        <%= link_to '-', link_votes_path(link, :vote => {:link_id => link.id, :up => false}), :method => :post %>
+    </td>
     <td><%= link_to 'Comments', link_comments_path(link) %></td>
     <td><%= link_to 'Edit', edit_link_path(link) %></td>
     <td><%= link_to 'Destory', link, :method => :delete, :confirm => "Are you sure?"%></td>

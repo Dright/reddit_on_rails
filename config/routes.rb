@@ -5,7 +5,8 @@ RedditOnRails::Application.routes.draw do
   resources :pages
 
   resources :links do
-    resources :comments
+    resources :comments, :only => [:index, :create]
+    resources :votes, :only => [:create, :destroy]
   end
 
   root :to => "pages#index"

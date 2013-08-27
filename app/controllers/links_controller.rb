@@ -15,7 +15,7 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if @link.save
-        format.html { redirect_to root_url }
+        format.html { redirect_to :back }
       else
         format.html { render :action => :new }
       end
@@ -27,7 +27,7 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if @link.update_attributes(params[:link])
-        format.html { redirect_to root_url }
+        format.html { redirect_to :back }
       else
         format.html { render :action => :edit }
       end
@@ -36,10 +36,13 @@ class LinksController < ApplicationController
 
   def destroy
     @link = Link.find(params[:id])
+    @commits.where(:link => @link).all
+    
     @link.destroy
+    @commits.each { |commit| commit.destroy }
 
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to :back }
     end
   end
 end
