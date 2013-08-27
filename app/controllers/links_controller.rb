@@ -1,12 +1,4 @@
 class LinksController < ApplicationController
-  def index
-    redirect_to root_url
-  end
-
-  def show
-    @link = Link.find(params[:id])
-  end
-
   def new
     @link = Link.new
   end
@@ -20,7 +12,7 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if @link.save
-        format.html { redirect_to @link }
+        format.html { redirect_to root_url }
       else
         format.html { render :action => :new }
       end
@@ -32,7 +24,7 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if @link.update_attributes(params[:link])
-        format.html { redirect_to @link }
+        format.html { redirect_to root_url }
       else
         format.html { render :action => :edit }
       end

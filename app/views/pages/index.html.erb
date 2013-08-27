@@ -6,8 +6,7 @@
 
 <table>
   <tr>
-    <th>Title</th>
-    <th>Url</th>
+    <th>Link</th>
     <th>Share by</th>
     <th></th>
     <th></th>
@@ -16,10 +15,8 @@
 
 <% @links.each do |link| %>
   <tr>
-    <td><%= link.title %></td>
-    <td><%= link_to link.url, link.url %></td>
+    <td><%= link_to link.title, link.url %></td>
     <td><%= link.user.name if link.user.present? %></td>
-    <td><%= link_to 'Show', link_path(link) %></td>
     <td><%= link_to 'Edit', edit_link_path(link) %></td>
     <td><%= link_to 'Destory', link, :method => :delete, :confirm => "Are you sure?"%></td>
   </tr>
