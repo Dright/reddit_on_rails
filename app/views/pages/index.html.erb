@@ -17,6 +17,7 @@
   <tr>
     <td><%= link_to link.title, link.url %></td>
     <td><%= link.user.name if link.user.present? %></td>
+    <td><%= link_to 'Comments', link_comments_path(link) %></td>
     <td><%= link_to 'Edit', edit_link_path(link) %></td>
     <td><%= link_to 'Destory', link, :method => :delete, :confirm => "Are you sure?"%></td>
   </tr>

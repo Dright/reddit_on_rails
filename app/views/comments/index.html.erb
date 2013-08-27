@@ -1,0 +1,59 @@
+<h2> Comments for <b><%= link_to @link.title, @link.url %></b> </h2>
+
+<div class='comment-box'>
+  <b>Add Comment:</b>
+  <input type='text' class='comment-input' data-comment-message />
+  <button class='comment-submit' data-comment-submit='<%= link_comments_path %>' 
+          data-user-id='<%= current_user.id if current_user.present? %>' data-comment-link='<%= @link.id %>' 
+          data-user-name='<%= current_user.name if current_user.present? %>'> submit </button>
+</div>
+
+<br />
+<ul class='comment-list'>
+  <% @comments.each do |comment| %>
+    <li class='comment-entry'>
+      <%= comment.message %> 
+      <span>by <%= comment.user.name if comment.user.present? %></span> 
+    </li>
+  <% end %>
+</ul>
+
+<br />
+<%= link_to 'Back', root_path %>
+
+
+<script type='text/javascript'>
+  $(document).ready(function(){
+
+    $('[data-comment-submit]').on('click',function(){
+      $this = $('[data-comment-submit]');
+      $textArea = $('[data-comment-message]');
+      url = $this.attr('data-comment-submit');
+      message = $textArea.val();
+      userId = parseInt($this.attr('data-user-id'));
+      linkId = parseInt($this.attr('data-comment-link'));
+      userName = $this.attr('data-user-name');
+
+      if( $this.attr('data-comment-user') == '' ) {
+        alert("Please sign in to add your comment.");
+        return
+      }
+
+      $.ajax({ type: 'post',
+               url: url,
+               dataType: 'json',
+               data: { comment: {message: message, user_id: userId, link_id: linkId} }
+            }).success(function(data){
+                       _t = "";
+                       _t += "<li class='comment-entry'>" ;
+                       _t += data.message ;
+                       _t += "  <span>by "+ userName +"</span>" ;
+                       _t += "</li>" ;
+                       $('.comment-list').prepend(_t);
+                       $textArea.val('');
+      });
+    });
+
+  });
+</script>
+
